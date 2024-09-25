@@ -84,7 +84,28 @@ The overflow could be detected by passing the two most significant carry bit (le
 
 ## 5. isNotEqual
 
-isNotEqual is equivalent to determine whether the computed result after subtraction is 0 or not. Therefore, by using or operator | on the computed result and (command[1]) ? ((|computed_result) ? 1:0 ): 0 , we will be able to assign the correct value to isNotEqual. Noticing that 
+isNotEqual is equivalent to determine whether the computed result after subtraction is 0 or not. Therefore, by using or operator | on the computed result and (command[1]) ? ((|computed_result) ? 1:0 ): 0 , we will be able to assign the correct value to isNotEqual. Noticing that command[1] determines whether a subtraction has been performed or not. 
+
+## 6. isLessThan
+
+
+## 7. Bitwise_AND
+
+by using a generative for loop that loop over each bits, use conditional statement data_operandA[i]?(data_operandB[i]? 1 :0 ) : 0
+
+## 8. Bitwise_OR
+
+by using a generative for loop that loop over each bits, use conditional statement data_operandA[i]? 1:(data_operandB[i]?1:0) 
+
+## 9. SLL
+
+Based on what covered in lectures, I use 5 generative for loops, and each loop contain 32 mux. The first loop corresponds to shift by 1 or 0, the second loop corresponds to shift by 2 or 0, and so on. Inside each loop, there is a generative if statement to set one of the input of mux as 0 for certain looping variable. 
+
+## 10.SLA
+
+Similarly,  I use 5 generative for loops, and each loop contain 32 mux. The first loop corresponds to shift by 1 or 0, the second loop corresponds to shift by 2 or 0, and so on. Inside each loop, there is a generative if statement to set one of the input of mux as 1 for certain looping variable. 
+
+
 
 
 
