@@ -11,6 +11,18 @@
 3. Subtract Operation
 
 4. Overflow
+
+5. isNotEqual
+
+6. isLessThan
+
+7. Bitwise_AND
+
+8. Bitwise_OR
+
+9. SLL
+
+10. SRA
 ---
 
 ## 1. Structure Overview
@@ -20,6 +32,14 @@
 - alu_tb.v: the testbench of alu.v
 - Fourbit_Carrylookahead_Adder.v: the 4 bit carry look ahead adder
 - Complete_CLA_Adder: the complete 32 bit adder based on 4 bit carry look ahead adder
+- Mux.v : a 2 bits to 1 bits mux
+- Decoder.v : a 5bits to 32 bits decoder that helps determine which operation to use
+- isNotEqual.v: determines whether A!=B, performed after subtraction
+- isLessThan.v: determines whether A<B, performed after subtraction
+- Bitwise_AND.v: perfrom bitwise AND on dataA and dataB
+- Bitwise_OR.v: perfrom bitwise OR on dataA and dataB
+- SLL.v: left shift module
+- SRA.v: right shift module
 
 **b) Input and Output:**
 |**Port Name**|**Input/output**|**Description**|
@@ -32,9 +52,12 @@
 |isNotEqual|Output|Flag - A≠B when subtracting|
 |isLessThan|Output|Flag - dataA < dataB when subtracting|
 |overflow|Output|Flag - overflow|
+|isNotEqual|Output|Flag - performed after subtraction, determine whether dataA!=dataB
+|isLessThan|Output|Flag - performed after subtraction, determine whether dataA<dataB
 
 **c) Description**
-First, I made a 4 bit carry look ahead adder. Then, I wrote a complete 32 bit carry look ahead adder based on 4 bit carry look ahead adder. This 32 bit carry look ahead adder incorporates overflow feature that xor the last 2 carry bits. The ALU will decide which operation to perform based on the last bit of ctrl_ALUopcode ([0]). If it is addition, the ALU will simply call the 32 bit carry look ahead adder with 0 as the first carry in bit to compute. If it is subtraction, the ALU will first perform a NOT gate on data_operand and call the 32 bit carry look ahead adder with 1 as the first carry bit. The 32 bit carry look ahead adder will produce the computed answer and overflow. 
+First, I made a 4 bit carry look ahead adder. Then, I wrote a complete 32 bit carry look ahead adder based on 4 bit carry look ahead adder. This 32 bit carry look ahead adder incorporates overflow feature that xor the last 2 carry bits. The ALU will decide which operation to perform based on the last bit of ctrl_ALUopcode ([0]). If it is addition, the ALU will simply call the 32 bit carry look ahead adder with 0 as the first carry in bit to compute. If it is subtraction, the ALU will first perform a NOT gate on data_operand and call the 32 bit carry look ahead adder with 1 as the first carry bit. The 32 bit carry look ahead adder will produce the computed answer and overflow. When subtraction is performed, isNotEqual will be true if dataA!= dataB, and isLessThan will be true if dataA < dataB. 
+The Bitwise_ADD and Bitwise_OR performs ADD and OR operator for each bit in dataA and dataB. The SLL and SRA will shift dataA by left or right for a certain number of digits. 
 
 ---
 
@@ -58,6 +81,10 @@ Based on the rule of representing signed number in binary, to perform subtractio
 Overflow is determined after subtraction and addition operations. It has accomplished the checking when in 32-bit CLA (first level) design. If the carry_in of the last bit is not equal to the carry_out of the last bit, there is an overflow happened. Simply achieved by:
 
 The overflow could be detected by passing the two most significant carry bit (leftmost two) of the adder to a XOR gate. for example, overflow = (carry[8]^carry_addition[7]); where the things in bracket corresponds to two most significant carry out bit. 
+
+## 5. isNotEqual
+
+isNotEqual is equivalent to determine whether the computed result after subtraction is 0 or not. Therefore, by using or operator | on the computed result and (command[1]) ? ((|computed_result) ? 1:0 ): 0 , we will be able to assign the correct value to isNotEqual. Noticing that 
 
 
 
