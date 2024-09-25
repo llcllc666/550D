@@ -1,4 +1,4 @@
-# ALU checkpoint 1
+# ALU checkpoint 2
 
 **NetID:** ll372   **Name:** Liuchang (Leo) Lu   **Course:** ECE550D   **Date:** 09/16/2024
 
@@ -88,6 +88,7 @@ isNotEqual is equivalent to determine whether the computed result after subtract
 
 ## 6. isLessThan
 
+To test if dataA<B, I evaluate overflow ^ computed_result[31]. 
 
 ## 7. Bitwise_AND
 
@@ -103,7 +104,7 @@ Based on what covered in lectures, I use 5 generative for loops, and each loop c
 
 ## 10.SLA
 
-Similarly,  I use 5 generative for loops, and each loop contain 32 mux. The first loop corresponds to shift by 1 or 0, the second loop corresponds to shift by 2 or 0, and so on. Inside each loop, there is a generative if statement to set one of the input of mux as 1 for certain looping variable. 
+Similarly,  I use 5 generative for loops, and each loop contain 32 mux. The first loop corresponds to shift by 1 or 0, the second loop corresponds to shift by 2 or 0, and so on. Inside each loop, there is a generative if statement to set one of the input of mux as 1 or 0 based on the sign of dataA for certain looping variable. 
 
 
 
