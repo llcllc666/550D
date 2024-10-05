@@ -23,6 +23,8 @@
 9. SLL
 
 10. SRA
+
+11. Regfile
 ---
 
 ## 1. Structure Overview
@@ -105,6 +107,22 @@ Based on what covered in lectures, I use 5 generative for loops, and each loop c
 ## 10.SLA
 
 Similarly,  I use 5 generative for loops, and each loop contain 32 mux. The first loop corresponds to shift by 1 or 0, the second loop corresponds to shift by 2 or 0, and so on. Inside each loop, there is a generative if statement to set one of the input of mux as 1 or 0 based on the sign of dataA for certain looping variable. 
+
+## 11.Regfile
+|**Port Name**|**Input/output**|**Description**|
+|-|-|-|
+|clock|Input|clock signal for the regfile|
+|ctrl_writeEnable|Input|Enable signal for the write portion|
+|ctrl_reset|Input|Reset signal for regfile|
+|ctrl_writeReg[4:0]|Input|register control command for write|
+|ctrl_readRegA/B[4:0]|Input|register control command for read A/B|
+|data_writeReg[31:0]|Input|32-bit data to be writtened|
+|data_readRegA/B[31:0]|Output|32-bit data to read A/B|
+
+First, a decoder is created to decode the 5bit write and read signal. Then based on the 1bit flipflop, I created a 32 bit flipflop by a generate for loop. Then in the main regfile, I created another generate for loop from i=0 to i=31. Inside the loop,  I created an and gate that connect the write enable signal and the write control signal. Then the result of the end gate is passes to the flip-flop. Then the result of the flipflop is passes to the tristate buffer and output to data_regA or dataRegB. 
+
+
+
 
 
 
