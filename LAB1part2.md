@@ -19,9 +19,10 @@
 when we get a high read_enable signal (plus io.message_val && io.message_rdy), it means that we can start reading in the input data. We put the inpug message into a register and set the input_done signal as high. It is important to notice that when the read_enable signal is off, we need to set the input_done as off in order to refresh this value (otherwise it will stay high!). This mindset is also applied to other signal. 
 
 2. state (XOR)
+
 Following a similar method, a for loop is used to XOR the state register (full of 0 upon initialization). When it is done, xor_done is set to high.
 
-3. state (keccakf)
+4. state (keccakf)
 
 Since there are several stages in this keccakf, I first create 3 temporary register (theta_out, rhopi_out, iota_out) to store temporary results of each stage. In addition, a register storing the round variable is created. In each cycle, the round variable is incremented by 1. The process end when the round == 23 (24 rounds in total). Finally, we set the keccakf_done signal accordingly. 
 
