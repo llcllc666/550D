@@ -22,11 +22,14 @@ when we get a high read_enable signal (plus io.message_val && io.message_rdy), i
 
 Following a similar method, a for loop is used to XOR the state register (full of 0 upon initialization). When it is done, xor_done is set to high.
 
-4. state (keccakf)
+3. state (keccakf)
 
 Since there are several stages in this keccakf, I first create 3 temporary register (theta_out, rhopi_out, iota_out) to store temporary results of each stage. In addition, a register storing the round variable is created. In each cycle, the round variable is incremented by 1. The process end when the round == 23 (24 rounds in total). Finally, we set the keccakf_done signal accordingly. 
 
 4. state (output)
-In the output state. when hash_rdy and hash_val is high, while output_enable is high, we set the output message (OutMsg) and make output_done high. 
+In the output state. when hash_rdy and hash_val is high, while output_enable is high, we set the output message (OutMsg) and make output_done high.
+
+**3)Top Level Circuit Implementation
+In the top circuit, I connect the hash_valid, hash_ready for different modules together, as well as message.valid and message.ready. Finally, I connect all the enable and done signal of the datapath and control module together, as well as the incoming message and hashing result. 
 
 
